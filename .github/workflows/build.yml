@@ -1,0 +1,57 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install PyQt6==6.6.1
+        pip install sounddevice==0.4.6
+        pip install soundfile==0.12.1
+        pip install librosa==0.10.1
+        pip install numpy==1.26.4
+        pip install pyinstaller==6.3.0
+    
+    - name: Build EXE
+      run: |
+        pyinstaller build_windows.spec --clean --noconfirm
+    
+    - name: Package artifact
+      run: |
+        cd dist
+        7z a -tzip "../青丘主播替身-Windows.zip" "青丘主播替身"
+        cd ..
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: 青丘主播替身-Windows
+        path: 青丘主播替身-Windows.zip
+    
+    - name: Create Release
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: 青丘主播替身-Windows.zip
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
