@@ -37,14 +37,14 @@ jobs:
     - name: Package artifact
       run: |
         cd dist
-        7z a -tzip "../青丘主播替身-Windows.zip" "青丘主播替身"
+        7z a -tzip "../Qingqiu-Avatar-Windows.zip" "QingqiuAvatar"
         cd ..
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: 青丘主播替身-Windows
-        path: 青丘主播替身-Windows.zip
+        name: Qingqiu-Avatar-Windows
+        path: Qingqiu-Avatar-Windows.zip
     
     - name: Create Release
       if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')

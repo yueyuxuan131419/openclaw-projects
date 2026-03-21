@@ -69,7 +69,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='青丘主播替身',
+    name='QingqiuAvatar',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
