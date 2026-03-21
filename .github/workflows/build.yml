@@ -37,7 +37,8 @@ jobs:
     - name: Package artifact
       run: |
         cd dist
-        7z a -tzip "../Qingqiu-Avatar-Windows.zip" "QingqiuAvatar"
+        ls -la
+        7z a -tzip "../Qingqiu-Avatar-Windows.zip" "QingqiuAvatar.exe"
         cd ..
     
     - name: Upload artifact
