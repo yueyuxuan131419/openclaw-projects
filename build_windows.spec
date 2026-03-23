@@ -4,22 +4,29 @@
 import sys
 import os
 from pathlib import Path
+from PyInstaller.utils.hooks import collect_all, collect_dynamic_libs
 
 # 项目根目录
 base_dir = os.path.abspath('.')
 
 block_cipher = None
 
+# 收集 PyQt6 的所有依赖（包含 DLL）
+qt_binaries = collect_dynamic_libs('PyQt6')
+qt_datas = collect_all('PyQt6')
+
 a = Analysis(
     ['main.py'],
     pathex=[base_dir],
-    binaries=[],
+    binaries=qt_binaries,
     datas=[
         # 包含音频模块
         ('audio', 'audio'),
         # 包含配置文件
         ('config.py', '.'),
         ('utils.py', '.'),
+        # 包含 Qt 平台插件和资源
+        *qt_datas[0],
     ],
     hiddenimports=[
         'sounddevice',
@@ -31,6 +38,9 @@ a = Analysis(
         'PyQt6.QtCore',
         'PyQt6.QtGui',
         'PyQt6.QtWidgets',
+        'PyQt6.QtNetwork',
+        'PyQt6.QtMultimedia',
+        *qt_datas[2],
         'audio.recorder',
         'audio.processor',
         'audio.player',
