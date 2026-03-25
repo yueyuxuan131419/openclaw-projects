@@ -66,7 +66,7 @@ a = Analysis(
         ('config.py', '.'),
         ('utils.py', '.'),
         # 包含 Qt 数据文件
-        *qt_datas[0] if qt_datas else [],
+        *(qt_datas[0] if qt_datas else []),
     ],
     hiddenimports=[
         'sounddevice',
