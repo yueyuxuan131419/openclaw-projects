@@ -83,7 +83,7 @@ a = Analysis(
         'PyQt6.QtMultimediaWidgets',
         # 添加所有 Qt 子模块
         *qt_hiddenimports,
-        *qt_datas[2] if qt_datas else [],
+        *(qt_datas[2] if qt_datas else []),
         # 音频模块
         'audio.recorder',
         'audio.processor',
