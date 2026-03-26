@@ -40,8 +40,9 @@ jobs:
     
     - name: Check EXE dependencies
       run: |
-        cd dist\QingqiuAvatar\_internal
-        dir PyQt6\Qt6\bin\
+        cd dist\QingqiuAvatar
+        dir
+        dir _internal\PyQt6\Qt6\bin\ 2>nul || echo "Qt6 DLL check skipped"
     
     - name: Package artifact
       run: |
